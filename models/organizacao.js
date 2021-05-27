@@ -4,20 +4,35 @@ const conexao = require('../infraestrutura/conexao')
 class Organizacao {
     adiciona(organizacao, res) {
         const dataLancamento = moment(organizacao.dataLancamento, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        var valorStatus = 'vazio'
 
+        var filmeAtivo = function(valor){
+            const dataAtual = moment().format('YYYY-MM-DD')
+            const dataLancamentoFormato = moment(organizacao.dataLancamento, 'DD/MM/YYYY').format('YYYY-MM-DD')
 
-            const organizacaoData = {...organizacao, dataLancamento}
+            const dataDisponivel = moment(dataLancamentoFormato).isSameOrAfter(dataAtual)
+            
+            if(dataDisponivel){
+                return valor = 'Aguardando lançamento'
 
-            console.log(organizacao.dataLancamento)
-            const sql = 'INSERT INTO Filmes SET ?'
+            }else{
+                return valor = 'Disponível'
+            }
+        }
+
+        var status = filmeAtivo(valorStatus)
+
+        const organizacaoData = {...organizacao, dataLancamento, status}
+
+        const sql = 'INSERT INTO Filmes SET ?'
     
-            conexao.query(sql, organizacaoData, (erro, resultados) => {
-                if(erro) {
-                    res.status(400).json(erro)
-                } else {
-                    res.status(201).json(organizacao)
-                }
-            })
+        conexao.query(sql, organizacaoData, (erro, resultados) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(201).json(organizacao)
+            }
+        })
 
        
     }
@@ -53,7 +68,7 @@ class Organizacao {
         }      
         const sql = 'UPDATE Filmes SET ? WHERE id=?'
 
-        console.log(valores)
+    
         conexao.query(sql, [valores, id], (erro, resultados) => {
             if(erro) {
                 res.status(400).json(erro)
