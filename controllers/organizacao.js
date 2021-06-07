@@ -12,9 +12,11 @@ module.exports = app => {
     })
 
     app.post('/organizacao', (req, res) => {
-       const organizacao = req.body
-
-        Organizacao.adiciona(organizacao, res)
+        const organizacao = req.body
+        
+        Organizacao.adiciona(organizacao).then(organizacaoCadastrada =>
+            res.status(201).json(organizacaoCadastrada))
+            .catch(erros => res.status(400).json(erros))
     }) 
 
     app.patch('/organizacao/:id', (req, res) => {
