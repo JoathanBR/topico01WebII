@@ -1,4 +1,4 @@
-const Organizacao = require('../models/organizacao')
+const Organizacao = require('../models/organizacao') 
 
 module.exports = app => {
     app.get('/organizacao', (req, res) => {
