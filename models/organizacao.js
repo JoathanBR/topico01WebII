@@ -24,11 +24,16 @@ class Organizacao {
 
         var status = filmeAtivo(valorStatus)
 
+        const sql = 'INSERT INTO Filmes SET ?'
+
         const organizacaoData = {...organizacao, dataLancamento, status}
 
-        repositorio.adiciona(organizacaoData).then(resultados =>{
-            const id = resultados.insertId
-            return {...organizacao, id}
+        conexao.query(sql, organizacaoData, (erro, resultados) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(200).json(organizacao)
+            }
         })
       
     }
