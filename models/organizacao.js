@@ -1,6 +1,5 @@
 const moment = require('moment')
 const conexao = require('../infraestrutura/conexao')
-const repositorio = require('../repositorios/organizacao')
 
 
 class Organizacao {
@@ -26,9 +25,14 @@ class Organizacao {
 
         const organizacaoData = {...organizacao, dataLancamento, status}
 
-        repositorio.adiciona(organizacaoData).then(resultados =>{
-            const id = resultados.insertId
-            return {...organizacao, id}
+        const sql = 'INSERT INTO Filmes SET ?'
+
+        conexao.query(sql, organizacaoData, (erro, resultados) => {
+            if(erro) {
+                res.status(400).json(erro)
+            } else {
+                res.status(201).json(organizacao)
+            }
         })
       
     }

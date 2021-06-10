@@ -14,9 +14,7 @@ module.exports = app => {
     app.post('/organizacao', (req, res) => {
         const organizacao = req.body
         
-        Organizacao.adiciona(organizacao).then(organizacaoCadastrada =>
-            res.status(201).json(organizacaoCadastrada))
-            .catch(erros => res.status(400).json(erros))
+        Organizacao.adiciona(organizacao, res)
     }) 
 
     app.patch('/organizacao/:id', (req, res) => {
