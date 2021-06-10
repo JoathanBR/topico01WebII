@@ -1,6 +1,5 @@
 const moment = require('moment')
 const conexao = require('../infraestrutura/conexao')
-const repositorio = require('../repositorios/organizacao')
 
 
 class Organizacao {
