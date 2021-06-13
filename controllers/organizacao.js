@@ -45,6 +45,22 @@ class OrganizacaoController {
             return res.status(500).json(todosOsFilmes)
         }
     }
+
+    static async deletarFilme(req, res){
+        try{
+            const id = parseInt(req.params.id)
+            const deletar = await database.Organizacao.findByPk(id)
+            deletar.destroy()
+
+            return res.status(200).json(deletar.destroy())
+        } catch{
+            const id = parseInt(req.params.id)
+            const deletar = await database.Organizacao.findByPk(id)
+            deletar.destroy()
+            
+            return res.status(500).json(deletar.destroy())
+        }
+    }
 }
 
 module.exports = OrganizacaoController

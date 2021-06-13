@@ -24,6 +24,22 @@ class FilmeController {
             return res.status(500).json(todasAsImagens)
         }
     }
+
+    static async deletarFilme(req, res){
+        try{
+            const id = parseInt(req.params.id)
+            const deletar = await database.InfoExtra.findByPk(id)
+            deletar.destroy()
+
+            return res.status(200).json(deletar.destroy())
+        } catch{
+            const id = parseInt(req.params.id)
+            const deletar = await database.InfoExtra.findByPk(id)
+            deletar.destroy()
+
+            return res.status(200).json(deletar.destroy())
+        }
+    }
 }
 
 module.exports = FilmeController
