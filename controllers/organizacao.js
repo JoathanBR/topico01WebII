@@ -1,3 +1,4 @@
+/*
 const Organizacao = require('../models/organizacao') 
 
 module.exports = app => {
@@ -30,3 +31,20 @@ module.exports = app => {
         Organizacao.deleta(id, res)
     })
 }
+*/
+
+const database = require('../repositorios/models')
+
+class OrganizacaoController {
+    static async pegaTodosOsFilmes(req, res){
+        try{
+            const todosOsFilmes = await database.Organizacao.findAll()
+            return res.status(200).json(todosOsFilmes)
+        } catch{
+            const todosOsFilmes = await database.Organizacao.findAll()
+            return res.status(500).json(todosOsFilmes)
+        }
+    }
+}
+
+module.exports = OrganizacaoController

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('InfoExtra', {
+    await queryInterface.createTable('InfoExtras', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,11 +15,19 @@ module.exports = {
       filme_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model:'Organizacao', key:'id'}
+        references: {model:'Organizacaos', key:'id'}
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('InfoExtra');
+    await queryInterface.dropTable('InfoExtras');
   }
 };
