@@ -1,16 +1,3 @@
-/*
-const Filme = require('../models/filme')
-
-module.exports = app => {
-    app.post('/filme', (req, res) =>{
-        const filme = req.body
-        
-        Filme.adiciona(filme, res)
-    })
-    
-}
-*/
-
 const database = require('../repositorios/models')
 
 class FilmeController {
@@ -37,7 +24,45 @@ class FilmeController {
             const deletar = await database.InfoExtra.findByPk(id)
             deletar.destroy()
 
-            return res.status(200).json(deletar.destroy())
+            return res.status(500).json(deletar.destroy())
+        }
+    }
+
+    static async adicionarFilme(req, res){
+        try{
+            const filme = req.body
+
+            database.InfoExtra.create(filme)
+
+            return res.status(200).json(filme)
+
+        } catch{
+
+            return res.status(500).json('Deu ruim')
+
+        }
+    }
+
+    static async atualizarFilme(req, res){
+        try{
+    
+            const id = parseInt(req.params.id)
+            const filme = await database.InfoExtra.findByPk(id)
+
+            const valores = [
+                filme.imagem = req.body.imagem,
+                filme.filme_id = req.body.filme_id, 
+                filme.createdAt = new Date, 
+                filme.updateAt = new Date
+            ]
+
+            filme.save()
+
+            return res.status(200).json(filme)
+
+        } catch{
+                    
+            return res.status(500).json('Deu ruim')
         }
     }
 }

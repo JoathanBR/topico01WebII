@@ -1,48 +1,16 @@
-/*
-const Organizacao = require('../models/organizacao') 
-
-module.exports = app => {
-    app.get('/organizacao', (req, res) => {
-        Organizacao.lista(res)
-    })
-
-    app.get('/organizacao/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-
-        Organizacao.buscaPorId(id, res)
-    })
-
-    app.post('/organizacao', (req, res) => {
-        const organizacao = req.body
-        
-        Organizacao.adiciona(organizacao, res)
-    }) 
-
-    app.patch('/organizacao/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-        const valores = req.body
-
-        Organizacao.altera(id, valores, res)
-    })
-
-    app.delete('/organizacao/:id', (req, res) => {
-        const id = parseInt(req.params.id)
-
-        Organizacao.deleta(id, res)
-    })
-}
-*/
-
 const database = require('../repositorios/models')
 
 class OrganizacaoController {
     static async pegaTodosOsFilmes(req, res){
         try{
+
             const todosOsFilmes = await database.Organizacao.findAll()
+
             return res.status(200).json(todosOsFilmes)
+
         } catch{
-            const todosOsFilmes = await database.Organizacao.findAll()
-            return res.status(500).json(todosOsFilmes)
+
+            return res.status(500).json('Deu ruiim')
         }
     }
 
@@ -54,11 +22,50 @@ class OrganizacaoController {
 
             return res.status(200).json(deletar.destroy())
         } catch{
-            const id = parseInt(req.params.id)
-            const deletar = await database.Organizacao.findByPk(id)
-            deletar.destroy()
+
+            return res.status(500).json('Deu ruim')
+        }
+    }
+    
+    static async adicionarFilme(req, res){
+        try{
+            const organizacao = req.body
+
+            database.Organizacao.create(organizacao)
+
+            return res.status(200).json(organizacao)
+
+        } catch{
             
-            return res.status(500).json(deletar.destroy())
+            return res.status(500).json('Deu ruim')
+
+        }
+    }
+
+    static async atualizarFilme(req, res){
+        try{
+    
+            const id = parseInt(req.params.id)
+            const filme = await database.Organizacao.findByPk(id)
+
+            const valores = [
+                filme.titulo = req.body.titulo,
+                filme.genero = req.body.genero, 
+                filme.duracao = req.body.duracao, 
+                filme.dataLancamento = req.body.dataLancamento, 
+                filme.avaliacao = req.body.avaliacao, 
+                filme.descricao = req.body.descricao, filme.status = req.body.status, 
+                filme.createdAt = new Date, 
+                filme.updateAt = new Date
+            ]
+
+            filme.save()
+
+            return res.status(200).json(filme)
+
+        } catch{
+                    
+            return res.status(500).json('Deu ruim')
         }
     }
 }

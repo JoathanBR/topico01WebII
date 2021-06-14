@@ -6,5 +6,8 @@ const router = Router()
 
 router.get('/filme', FilmeController.pegaTodasAsImagens)
 router.delete('/filme/:id', FilmeController.deletarFilme)
+router.post('/filme', FilmeController.adicionarFilme)
+router.patch('/filme/:id', FilmeController.atualizarFilme)
+
 
 module.exports = router
