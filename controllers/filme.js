@@ -63,21 +63,6 @@ class FilmeController {
         }
     }
 
-    /*
-    static async pegarFilme(req, res){
-        try{
-            const id = parseInt(req.params.id)
-            const filme = await database.InfoExtra.findByPk(id)
-
-            console.log(res)
-
-            return filme.filme_id
-        } catch(error){
-        
-            return res.status(500).json(error.message)
-        }
-    }
-    */
 }
 
 module.exports = FilmeController
