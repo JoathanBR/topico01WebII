@@ -9,5 +9,6 @@ router.delete('/administrador/:id', AdministradorController.deletaradministrador
 router.post('/administrador', AdministradorController.adicionaradministrador)
 router.patch('/administrador/:id', AdministradorController.atualizaradministrador)
 
+router.post('/administrador/login', AdministradorController.login)
 
 module.exports = router

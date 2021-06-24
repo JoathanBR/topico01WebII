@@ -6,9 +6,9 @@ class FilmeController {
             const todasAsImagens = await database.InfoExtra.findAll()
             console.log(todasAsImagens)
             return res.status(200).json(todasAsImagens)
-        } catch{
-            const todasAsImagens = await database.InfoExtra.findAll()
-            return res.status(500).json(todasAsImagens)
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
 
@@ -19,12 +19,9 @@ class FilmeController {
             deletar.destroy()
 
             return res.status(200).json(deletar.destroy())
-        } catch{
-            const id = parseInt(req.params.id)
-            const deletar = await database.InfoExtra.findByPk(id)
-            deletar.destroy()
-
-            return res.status(500).json(deletar.destroy())
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
 
@@ -60,11 +57,27 @@ class FilmeController {
 
             return res.status(200).json(filme)
 
-        } catch{
-                    
-            return res.status(500).json('Deu ruim')
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
+
+    /*
+    static async pegarFilme(req, res){
+        try{
+            const id = parseInt(req.params.id)
+            const filme = await database.InfoExtra.findByPk(id)
+
+            console.log(res)
+
+            return filme.filme_id
+        } catch(error){
+        
+            return res.status(500).json(error.message)
+        }
+    }
+    */
 }
 
 module.exports = FilmeController

@@ -9,5 +9,6 @@ router.delete('/organizacao/:id', OrganizacaoController.deletarFilme)
 router.post('/organizacao', OrganizacaoController.adicionarFilme)
 router.patch('/organizacao/:id', OrganizacaoController.atualizarFilme)
 
+router.get('/organizacao/:id', OrganizacaoController.listarTodasInformacoes)
 
 module.exports = router

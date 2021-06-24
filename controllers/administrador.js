@@ -20,9 +20,9 @@ class AdministradorController {
             deletar.destroy()
 
             return res.status(200).json(deletar.destroy())
-        } catch{
+        } catch(error){
 
-            return res.status(500).json('Deu ruim')
+            return res.status(500).json(error.message)
 
         }
     }
@@ -30,26 +30,20 @@ class AdministradorController {
     static async adicionaradministrador(req, res){
         try{
             const admin = req.body
-
+            const custoHash = 12
             const senhaAdmin = req.body.senha
             
-            const gerarSenhaHash = (senha) => {
-                const custoHash = 5
+            const senhaHash = await bcrypt.hash(senhaAdmin, custoHash)  
 
-                return bcrypt.hash(senha, custoHash)
-            }
+            admin.senha = senhaHash
 
-            const senhaHash = gerarSenhaHash(senhaAdmin)
-
-            //console.log(gerarSenhaHash(senhaHash))
-            
-            //database.Administrador.create(admin)
+            database.Administrador.create(admin)
 
             return res.status(200).json(admin)
 
-        } catch{
+        } catch(error){
 
-            return res.status(500).json('Deu ruim')
+            return res.status(500).json(error.message)
 
         }
     }
@@ -78,11 +72,15 @@ class AdministradorController {
 
             return res.status(200).json(admin)
 
-        } catch{
+        } catch(error){
                     
-            return res.status(500).json('Deu ruim')
+            return res.status(500).json(error.message)
         }
     }
+
+    static async login(req, res){
+        res.status(204).send()
+      }
 
 }
 

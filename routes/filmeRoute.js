@@ -9,5 +9,7 @@ router.delete('/filme/:id', FilmeController.deletarFilme)
 router.post('/filme', FilmeController.adicionarFilme)
 router.patch('/filme/:id', FilmeController.atualizarFilme)
 
+//router.get('/filme/:id', FilmeController.pegarFilme)
+
 
 module.exports = router

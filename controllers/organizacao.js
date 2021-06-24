@@ -1,4 +1,5 @@
 const database = require('../repositorios/models')
+const infoExtra = require('./filme')
 
 class OrganizacaoController {
     static async pegaTodosOsFilmes(req, res){
@@ -8,9 +9,9 @@ class OrganizacaoController {
 
             return res.status(200).json(todosOsFilmes)
 
-        } catch{
-
-            return res.status(500).json('Deu ruiim')
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
 
@@ -21,9 +22,9 @@ class OrganizacaoController {
             deletar.destroy()
 
             return res.status(200).json(deletar.destroy())
-        } catch{
-
-            return res.status(500).json('Deu ruim')
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
     
@@ -35,10 +36,9 @@ class OrganizacaoController {
 
             return res.status(200).json(organizacao)
 
-        } catch{
-            
-            return res.status(500).json('Deu ruim')
-
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
 
@@ -63,9 +63,29 @@ class OrganizacaoController {
 
             return res.status(200).json(filme)
 
-        } catch{
-                    
-            return res.status(500).json('Deu ruim')
+        } catch(error){
+        
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async listarTodasInformacoes(req, res){
+        try{
+            const idCatalago = parseInt(req.params.id)
+            const catalogo = await database.Organizacao.findByPk(idCatalago)
+            const infoExtra = await database.InfoExtra.findAll({
+                where:{
+                    filme_id: idCatalago
+                }
+            })
+
+            const todos = [catalogo, infoExtra]
+
+            console.log(todos)
+            return res.status(200).json(todos)
+        } catch(error){
+        
+            return res.status(500).json(error.message)
         }
     }
 }
