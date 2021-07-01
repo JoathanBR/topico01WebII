@@ -1,5 +1,15 @@
 const database = require('../repositorios/models')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
+
+function criaTokenJWT(admin) {
+    const payload = {
+        id: admin.id
+    }
+
+    const token = jwt.sign(payload, process.env.CHAVE_JWT)
+    return token
+}
 
 class AdministradorController {
     static async pegaTodasAdministradores(req, res){
@@ -77,10 +87,22 @@ class AdministradorController {
         }
     }
 
-    static async login(req, res){
-        res.status(204).send()
-      }
+    static async buscarPorEmail(email) {
+        const admin = await database.Administrador.findOne({where: { email: email } })
+        return admin
+    }
 
+    static async buscaPorId(id) {
+        const admin = await database.Administrador.findByPk(id);
+        return admin;
+    }
+
+    static login(req, res) {
+        const token = criaTokenJWT(req.user)
+        console.log(token)
+        res.set('Authorization', token)
+        res.status(204).send()
+    }
 }
 
 module.exports = AdministradorController
